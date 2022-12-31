@@ -1,14 +1,13 @@
 import throttle from 'lodash.throttle';
 const contactFormEl = document.querySelector('.feedback-form');
 
-const userInfo = {};
+let userInfo = {};
 
 const fillContactFormFields = () => {
   try {
     const userInfoFromLS = JSON.parse(
       localStorage.getItem('feedback-form-state')
     );
-    console.log(userInfoFromLS);
     if (userInfoFromLS === null) {
       return;
     }
@@ -38,11 +37,17 @@ const onContactFormItemInput = event => {
 
 const onContactFormSubmit = event => {
   event.preventDefault();
-
-  console.log(userInfo);
-  contactFormEl.reset();
-  localStorage.removeItem('feedback-form-state');
+  if (userInfo.email && userInfo.message) {
+    console.log(userInfo);
+    contactFormEl.reset();
+    localStorage.removeItem('feedback-form-state');
+    userInfo = {};
+  } else {
+    alert('Please enter all the fields');
+    return false;
+  }
 };
+
 const throttledOnContactFormItemInput = throttle(onContactFormItemInput, 500);
 
 contactFormEl.addEventListener('input', throttledOnContactFormItemInput);

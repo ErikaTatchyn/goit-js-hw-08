@@ -7,12 +7,7 @@ player.on('play', function () {
   console.log('played the video!');
 });
 
-player.getVideoTitle().then(function (title) {
-  console.log('title:', title);
-});
-
 player.on('timeupdate', function () {
-  console.log('paused the video!');
   player
     .getCurrentTime()
     .then(function (seconds) {
@@ -26,7 +21,6 @@ player.on('timeupdate', function () {
 const setTimeFromLS = () => {
   try {
     const videoCurrentTime = localStorage.getItem('videoplayer-current-time');
-    console.log(videoCurrentTime);
     if (videoCurrentTime === null) {
       return;
     }
